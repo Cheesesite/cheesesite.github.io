@@ -2,58 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CheeseSite Blog Editor</title>
-  <!-- Use the fixed CDN URL for Supabase JS -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2.28.0/dist/supabase.min.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
-    button { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; }
-    #status { margin-top: 1rem; color: green; }
-    footer { margin-top: 3rem; font-size: 0.9rem; color: #666; text-align: center; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheesesite Blog Editor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="/favicon.png" type="image/png" />
 </head>
 <body>
-  <h1>CheeseSite Blog Editor</h1>
+  <header>
+    <h1>Cheesesite Blog Editor</h1>
+    <p>Write and publish cheese news the easy way.</p>
+  </header>
 
-  <button id="login-btn">Login with GitHub</button>
-  <div id="status">Not logged in</div>
+  <main>
+    <section>
+      <button id="login">Login with GitHub</button>
+      <p id="status">Checking login status…</p>
+    </section>
 
-  <footer>Version 1.1.0</footer>
+    <section id="editor" style="display: none;">
+      <h2>Create a Blog Post</h2>
+      <p><em>Coming soon: editor interface goes here.</em></p>
+    </section>
+  </main>
 
-  <script>
-    // Initialize Supabase client (replace these with your actual keys)
-    const supabaseUrl = 'YOUR_SUPABASE_URL';
-    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  <footer>
+    <p>Cheesesite Editor v0.0.2</p>
+  </footer>
 
-    // Login function
-    async function login() {
-      const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'github' });
-      const statusEl = document.getElementById('status');
-      if (error) {
-        statusEl.style.color = 'red';
-        statusEl.textContent = 'Login failed: ' + error.message;
-      } else {
-        statusEl.style.color = 'green';
-        statusEl.textContent = 'Redirecting to GitHub for login...';
-      }
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+    const supabaseUrl = 'https://coibfjmxtmacykygmoyk.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNvaWJmam14dG1hY3lreWdtb3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExNDgxMzEsImV4cCI6MjA2NjcyNDEzMX0.gD0cR99kBlvv71APYEgifg56lB9v1G8k_yjWHfwcCCY'
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    const loginBtn = document.getElementById('login')
+    const statusEl = document.getElementById('status')
+    const editorEl = document.getElementById('editor')
+
+    // Handle login
+    loginBtn.addEventListener('click', async () => {
+      const { error } = await supabase.auth.signInWithOAuth({ provider: 'github' })
+      if (error) console.error('Login error:', error.message)
+    })
+
+    // Check login status
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session && session.user) {
+      statusEl.textContent = `Logged in as ${session.user.email}`
+      editorEl.style.display = 'block'
+    } else {
+      statusEl.textContent = 'Not logged in'
+      editorEl.style.display = 'none'
     }
 
-    // Attach click listener
-    document.getElementById('login-btn').addEventListener('click', login);
-
-    // Handle auth state change
-    supabase.auth.onAuthStateChange((event, session) => {
-      const statusEl = document.getElementById('status');
-      if (session) {
-        statusEl.style.color = 'green';
-        statusEl.textContent = `Logged in as ${session.user.email}`;
-        // Here you could load editor UI or redirect to editor page
+    // Handle auth state changes (e.g., after redirect)
+    supabase.auth.onAuthStateChange(async (_, session) => {
+      if (session && session.user) {
+        statusEl.textContent = `Logged in as ${session.user.email}`
+        editorEl.style.display = 'block'
       } else {
-        statusEl.textContent = 'Not logged in';
+        statusEl.textContent = 'Not logged in'
+        editorEl.style.display = 'none'
       }
-    });
+    })
   </script>
 </body>
 </html>
