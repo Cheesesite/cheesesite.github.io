@@ -1,18 +1,26 @@
 ---
 layout: default
-title: Cheese Cellar Chronicles
+title: Blog
+permalink: /blog.html
 ---
 
-<h1>📝 Cheese Cellar Chronicles</h1>
-<p>All the latest dispatches from the aged and the aromatic:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cheese Blog</title>
+</head>
+<body>
+  <h1>Cheese Blog</h1>
+  <p>Welcome to the cheese blog. Below are the latest posts:</p>
 
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <small>— {{ post.date | date: "%B %-d, %Y" }}</small>
-    </li>
-  {% endfor %}
-</ul>
-
-<p><a href="/">← Return to Home</a></p>
+  <ul>
+    {% for post in site.posts %}
+      <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <span> – {{ post.date | date: "%B %d, %Y" }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
