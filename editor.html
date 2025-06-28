@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CheeseSite Blog Editor</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+  <!-- Use the fixed CDN URL for Supabase JS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2.28.0/dist/supabase.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
     button { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; }
@@ -18,10 +19,10 @@
   <button id="login-btn">Login with GitHub</button>
   <div id="status">Not logged in</div>
 
-  <footer>Version 1.0.0</footer>
+  <footer>Version 1.1.0</footer>
 
   <script>
-    // Initialize Supabase client
+    // Initialize Supabase client (replace these with your actual keys)
     const supabaseUrl = 'YOUR_SUPABASE_URL';
     const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
@@ -42,7 +43,7 @@
     // Attach click listener
     document.getElementById('login-btn').addEventListener('click', login);
 
-    // Optional: handle auth state change
+    // Handle auth state change
     supabase.auth.onAuthStateChange((event, session) => {
       const statusEl = document.getElementById('status');
       if (session) {
@@ -53,91 +54,6 @@
         statusEl.textContent = 'Not logged in';
       }
     });
-  </script>
-</body>
-</html>
-
-    <button id="publish-btn">Publish</button>
-    <div id="status"></div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-  <script>
-    const supabase = createClient(
-      'https://coibfjmxtmacykygmoyk.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNvaWJmam14dG1hY3lreWdtb3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExNDgxMzEsImV4cCI6MjA2NjcyNDEzMX0.gD0cR99kBlvv71APYEgifg56lB9v1G8k_yjWHfwcCCY'
-    );
-
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const authSection = document.getElementById('auth-section');
-    const editorSection = document.getElementById('editor-section');
-    const userEmail = document.getElementById('user-email');
-    const status = document.getElementById('status');
-
-    const simplemde = new SimpleMDE({ element: document.getElementById("body") });
-
-    async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        showEditor(session);
-      }
-    }
-
-    function showEditor(session) {
-      authSection.style.display = 'none';
-      editorSection.style.display = 'block';
-      userEmail.textContent = session.user.email;
-    }
-
-    loginBtn.onclick = async () => {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'github'
-      });
-      if (error) alert('Login failed');
-    };
-
-    logoutBtn.onclick = async () => {
-      await supabase.auth.signOut();
-      location.reload();
-    };
-
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (session) showEditor(session);
-    });
-
-    document.getElementById('publish-btn').onclick = async () => {
-      const title = document.getElementById('title').value.trim();
-      const date = document.getElementById('date').value;
-      const body = simplemde.value();
-
-      if (!title || !date || !body) {
-        status.textContent = 'Please fill in all fields.';
-        return;
-      }
-
-      const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
-      const filename = `_posts/${date}-${slug}.md`;
-      const markdown = `---\ntitle: "${title}"\ndate: ${date}\n---\n\n${body}`;
-
-      // Send to backend API (to be built next)
-      const res = await fetch('https://YOUR_BACKEND_URL/publish', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ filename, content: markdown })
-      });
-
-      if (res.ok) {
-        status.textContent = '✅ Blog post published!';
-      } else {
-        status.textContent = '❌ Failed to publish post.';
-      }
-    };
-
-    checkSession();
   </script>
 </body>
 </html>
