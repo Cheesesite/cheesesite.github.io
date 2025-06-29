@@ -6,10 +6,29 @@
 <head>
   <meta charset="UTF-8" />
   <title>Jekyll Check</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #fffaf0;
+      color: #2b2b2b;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Jekyll is working!</h1>
-  <p>The current site time is: {{ site.time }}</p>
+  <h1>Jekyll Processing Check</h1>
+  <p>If you see the current date and time below, Jekyll is working properly!</p>
+  <p><strong>Site Time:</strong> {{ site.time }}</p>
+
+  <footer>Version 1.0.1 - Updated June 29, 2025</footer>
 </body>
 </html>
-{{ site.time }}
