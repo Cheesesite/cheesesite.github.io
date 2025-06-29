@@ -1,32 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cheesesite</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Cheese Site</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #fffaf0;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: #2b2b2b;
+    }
+    header, footer {
+      background-color: #f7c331;
+      color: #2b2b2b;
+      padding: 1rem;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    nav {
+      margin: 1rem 0;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #2b2b2b;
+      font-weight: bold;
+    }
+    img.avatar {
+      width: 150px;
+      margin-top: 1rem;
+      border-radius: 15px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+    .version {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Welcome to my Cheese Site</h1>
-    <p>Explore the world of cheese, one curd at a time.</p>
-    <nav>
-      <ul>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="jekyll-check.html">Jekyll Check</a></li>
-        <!-- Add more links here as needed -->
-      </ul>
-    </nav>
+    <h1>🧀 Welcome to My Cheese Site</h1>
+    <p>All things cheese, curated by Cheesesite</p>
+    <img src="avatar.png" alt="Cheese with Moustache Avatar" class="avatar" />
   </header>
 
+  <nav>
+    <a href="/blog.html">Blog</a>
+    <a href="/editor.html">Editor</a>
+    <a href="/jekyll-check.html">Jekyll Check</a>
+    <a href="/test.html">Test Page</a>
+  </nav>
+
   <main>
-    <section>
-      <h2>About</h2>
-      <p>This site is dedicated to cheese culture, folklore, and interactive tools like maps and quizzes. Dive in and discover something deliciously unexpected.</p>
-    </section>
+    <h2>Latest Cheese Musings</h2>
+    <p>Welcome to the home of cheese-based blogging. If you’re seeing this, your site is working! Visit the <a href="/blog.html">blog</a> to read more.</p>
+
+    <div class="version">v1.0.0 - Updated June 29, 2025</div>
   </main>
 
   <footer>
-    <p>&copy; 2025 Cheesesite. All rights reserved.</p>
+    &copy; 2025 Cheesesite · Made with 🧀 in the UK
   </footer>
 </body>
 </html>
